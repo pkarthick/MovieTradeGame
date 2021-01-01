@@ -1,0 +1,18 @@
+<div [style.background]="site.color" [class.site]="site.location === 1" [class.corner]="site.location === 0" *ngFor="let site of this.sites">
+  <div class="price">
+    <div *ngIf="site.price !== 0">{{site.price}}</div>
+  </div>
+  <div class="place">
+    <div style="margin-bottom: 5px;">
+      <i *ngFor="let vis of site.visitors" style="margin-right: 2px; font-size: 24px" [style.color]="vis.color" class="{{vis.symbol}}"></i>&nbsp;
+    </div>
+    <div *ngIf="site.location === 0"><h2>{{site.name}}</h2></div>
+    <div *ngIf="site.location === 1">{{site.name}}</div>
+    <div style="margin-top: 5px;">
+      <i *ngIf="site.owner" style="font-size: 24px" [style.color]="site.owner.color" class="{{site.owner.symbol}}"></i>
+    </div>
+  </div>
+  <div class="rent">
+    <div *ngIf="site.type === 0">{{site.rent}}</div>
+  </div>
+</div>

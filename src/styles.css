@@ -1,0 +1,174 @@
+html, body {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
+}
+
+  .corner {
+    height: 200px;
+    width: 200px;
+    flex-direction: column;
+    border: 2px solid gray;
+    display: flex;
+    font-size: 18px;
+    text-align: center;
+    background: lightgrey;
+  }
+  
+  .corner > .price {
+    height: 25px;
+  }
+  
+  .top .site,
+  .bottom .site {
+    flex: 1 1;
+    height: 200px;
+    flex-direction: column;
+    border: 2px solid gray;
+    border-right-width: 0px;
+    display: flex;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .left .site,
+  .right .site {
+    flex: 1 1;
+    width: 200px;
+    flex-direction: row;
+    border: 2px solid gray;
+    border-bottom-width: 0px;
+    display: flex;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .top .site > .price,
+  .bottom .site > .price {
+    height: 25px;
+    font-weight: bold;
+  }
+  
+  .top .site > .rent,
+  .bottom > .site > .rent {
+    height: 25px;
+    font-weight: bold;
+  }
+  
+  .left .site > .price,
+  .right .site > .price {
+    width: 25px;
+    font-weight: bold;
+    display: flex;
+  }
+  
+  .left .site > .rent,
+  .right .site > .rent {
+    width: 25px;
+    font-weight: bold;
+    display: flex;
+  }
+  
+  
+  .corner > .rent {
+    height: 25px;
+  }
+  
+  .top .site > .place,
+  .bottom .site > .place,
+  .corner .place  {
+    height: 150px;
+    font-weight: bold;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background: white;
+  }
+  
+  .left .site > .place,
+  .right .site > .place {
+    width: 150px;
+    font-weight: bold;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background: white;
+  }
+  
+  .left .site > .price > div,
+  .right .site > .price > div {
+    justify-content: center;
+    align-self: center;
+    margin-left: -10px;
+    font-weight: bold;
+  }
+  
+  .left .site > .price > div {
+    transform: rotate(-90deg);
+  }
+  
+  .right .site > .price > div {
+    transform: rotate(90deg);
+  }
+  
+  .left .site > .rent > div,
+  .right .site > .rent > div {
+    justify-content: center;
+    align-self: center;
+    margin-left: -5px;
+    font-weight: bold;
+  }
+  
+  .left .site > .rent > div {
+    transform: rotate(-90deg);
+  }
+  
+  .right .site > .rent > div {
+    transform: rotate(90deg);
+  }
+  
+  
+  .corner > .place  {
+    background: lightgrey;
+  }
+  
+  .site > .place > div,
+  .corner > .place > div {
+    align-self: center;
+  }
+  
+  .top {
+    display: flex;
+  }
+  
+  .middle {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .bottom {
+    display: flex;
+  }
+  
+  .left {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .right {
+    width: 0 0 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .boardcenter {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  
+  }
+  

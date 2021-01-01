@@ -1,0 +1,140 @@
+<div style="display: flex; width: -webkit-fill-available; height: -webkit-fill-available; flex-direction: column;">
+  <div class="top">
+    <app-sites style="display: flex; flex: 1 1; flex-grow: 1" [sites]="topSites"></app-sites>
+  </div>
+  <div class="middle">
+    <div class="left">
+      <app-sites style="display: flex; flex-direction: column; flex: 1 1; flex-grow: 1" [sites]="leftSites"></app-sites>
+    </div>
+    <div class="boardcenter">
+
+      <div style="margin-top: 25px; margin-left: 50px; font-size: 28px; display: flex; flex-direction: column">
+        <div style="display: flex; flex-grow: 1">
+          <div style="flex-grow: 1; flex-basis: 150px; max-width: 150px;">Player</div>
+          <ng-container *ngFor="let player of players">
+            <div style="flex-basis: 100px; flex-grow: 1">
+              <i style="font-size: 24px" [style.color]="player.color" class="{{player.symbol}}"></i>
+              <span [style.color]="player.color" style="margin-left: 5px;">{{player.name}}</span>
+            </div>
+          </ng-container>
+        </div>
+        <div style="display: flex; flex-grow: 1">
+          <div style="flex-grow: 1; flex-basis: 150px; max-width: 150px;">Location</div>
+          <ng-container *ngFor="let player of players">
+            <div style="flex-basis: 100px; flex-grow: 1">
+              <span [style.color]="player.color" style="margin-left: 5px;">{{player.currentSite.name}}</span>
+            </div>
+          </ng-container>
+        </div>
+        <div style="display: flex; flex-grow: 1">
+          <div style="flex-grow: 1; flex-basis: 150px; max-width: 150px;">
+            Cash
+          </div>
+          <ng-container *ngFor="let player of players">
+            <div style="flex-basis: 100px; flex-grow: 1">
+              <span [style.color]='player.color' style="margin-left: 5px;">
+                {{player.cash}}</span>
+            </div>
+          </ng-container>
+        </div>
+        <div style="display: flex; flex-grow: 1">
+          <div style="flex-grow: 1; flex-basis: 150px; max-width: 150px;">
+            Property
+          </div>
+
+          <ng-container *ngFor="let player of players">
+            <div style="flex-basis: 100px; flex-grow: 1">
+              <span [style.color]='player.color' style="margin-left: 5px;">
+                {{getPropertyValue(player)}}</span>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+
+      <div *ngIf="this.currentAction === 0" class="demo">
+        <!-- <input type="text" style="font-size: 40px" value="" (keyup.enter)="this.diceValue1 = 1; this.diceValue2=$event.target.value - 1; this.rollDice();"
+        /> -->
+        <div class="wrap">
+          <div id="dice1" #mydice1 (click)="onRollDice(1); onRollDice(2);" class="dice dice_{{this.diceValue1}}" style="left: -2px; top: 2px; cursor: pointer;"></div>
+          <div id="dice2" #mydice2 (click)="onRollDice(1); onRollDice(2)" class="dice dice_{{this.diceValue2}}" style="left: -2px; top: 2px; cursor: pointer;"></div>
+        </div>
+      </div>
+
+      <div style="display: flex;flex-direction: column;flex-grow: 0;margin-top: 50px;">
+        <div [ngSwitch]="this.announcement" style="margin: auto;">
+          <div *ngSwitchCase="0">
+
+          </div>
+          <div *ngSwitchCase="1">
+            <div style="display: flex;">
+              <app-player [player]="this.previousPlayer"></app-player>
+              <h2 style="margin: 7px 5px 7px 5px">does not have sufficient cash to buy {{this.previousPlayer.currentSite.name}}</h2>
+            </div>
+          </div>
+          <div *ngSwitchCase="2">
+            <div style="display: flex;">
+              <app-player [player]="this.currentPlayer"></app-player>
+              <h2 style="margin: 7px 5px 7px 5px"> does not have sufficient cash to pay rent for the property {{this.currentPlayerSite.name}} to </h2>
+              <app-player [player]="this.currentPlayerSite.owner.name"></app-player>
+            </div>
+          </div>
+          <div style="display: flex;" *ngSwitchCase="3">
+            <app-player [player]="this.previousPlayer"></app-player>
+            <h2 style="margin: 7px 5px 7px 5px">has moved to {{this.previousPlayer.currentSite.name}}</h2>
+          </div>
+          <div style="display: flex;" *ngSwitchCase="4">
+            <app-player [player]="this.previousPlayer"></app-player>
+            <h2 style="margin: 7px 5px 7px 5px">has paid rent (₹ {{this.previousPlayer.currentSite.rent}}) for the property {{this.previousPlayer.currentSite.name}}
+              to
+            </h2>
+            <app-player [player]="this.previousPlayer.currentSite.owner"></app-player>
+          </div>
+          <div style="display: flex;" *ngSwitchCase="5">
+            <app-player [player]="this.previousPlayer"></app-player>
+            <h2 style="margin: 7px 5px 7px 5px">has paid Income Tax (₹ {{this.incomeTax}})</h2>
+          </div>
+          <div style="display: flex;" *ngSwitchCase="6">
+            <app-player [player]="this.previousPlayer"></app-player>
+            <h2 style="margin: 7px 5px 7px 5px">has paid Wealth Tax (₹ {{this.getWealthTax()}}) </h2>
+          </div>
+          <div style="display: flex;" *ngSwitchCase="7">
+            <app-player [player]="this.previousPlayer"></app-player>
+            <h2 style="margin: 7px 5px 7px 5px">has paid for Club</h2>
+          </div>
+          <div style="display: flex;" *ngSwitchCase="8">
+            <app-player [player]="this.previousPlayer"></app-player>
+            <h2 style="margin: 7px 5px 7px 5px">has collected money for Resort</h2>
+          </div>
+        </div>
+
+        <div [ngSwitch]="this.currentAction" style="margin: auto;">
+          <div style="display: flex;" *ngSwitchCase="0">
+            <app-player [player]="this.currentPlayer"></app-player>
+            <h2 style="margin: 7px 5px 7px 5px; color: green;"> - It is your turn. Roll the dice!</h2>
+          </div>
+
+          <div *ngSwitchCase="1">
+            <div style="width: 200px;">
+              <i style="font-size: 24px" [style.color]="this.currentPlayer.color" class="{{this.currentPlayer.symbol}}"></i>
+              <span [style.color]="this.currentPlayer.color" style="margin-left: 5px; font-size: 32px">{{this.currentPlayer.name}}</span>
+            </div>
+            <h1 *ngIf="this.currentPlayer.currentSite.type === 0 && !this.currentPlayer.currentSite.owner" style="color: DarkSlateGray;">Do you want to buy {{this.currentPlayer.currentSite.name}}?</h1>
+            <div *ngIf="this.currentPlayer.currentSite.type === 0 && !this.currentPlayer.currentSite.owner">
+              <div (click)="this.buyProperty(); " style="margin: 5px; text-align: center; height: 30px; padding: 5px; font-weight: bold; font-size: 18px; background-color: green;">Yes, I am buying it!</div>
+              <div (click)="this.currentAction = 0; this.changePlayer();" style="margin: 5px; text-align: center; height: 30px; padding: 5px; font-weight: bold; font-size: 18px; background-color: red">No, I'm not interested!</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="right">
+      <app-sites style="display: flex; flex-direction: column; flex: 1 1; flex-grow: 1" [sites]="rightSites"></app-sites>
+    </div>
+  </div>
+  <div class="bottom">
+    <app-sites style="display: flex; flex: 1 1; flex-grow: 1" [sites]="bottomSites"></app-sites>
+  </div>
+</div>
